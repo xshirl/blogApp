@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var mongoose = require('mongoose');
 var expressSanitizer = require('express-sanitizer')
-
+var Comment = require('./models/comment');
 var Blog = require("./models/blog")
 var seedDb = require('./seeds');
 
@@ -105,6 +105,38 @@ app.delete("/blogs/:id", function(req, res) {
 		}
 	})
 	
+})
+
+//comments routes
+
+app.get("/blogs/:id/comments/new", function(req, res) {
+	Blog.findById(req.params.id, function (err, blog) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render("comments/new", {blog:blog})
+		}
+	})
+	
+})
+
+app.post("/blogs/:id/comments", function(req, res) {
+	Blog.findById(req.params.id, function(err, blog) {
+		if(err) {
+			console.log(err);
+			res.redirect("/blogs")
+		}else {
+			Comment.create(req.body.comment, function(err, comment) {
+				if(err) {
+					console.log(err);
+				} else{
+					blog.comments.push(comment);
+					blog.save();
+					res.redirect('/blogs/' + blog._id)
+				}
+			})
+		}
+	})
 })
 
 var PORT = 3000;

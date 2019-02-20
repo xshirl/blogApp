@@ -15,7 +15,7 @@
 			<form class="delete" action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
 				<button class="ui red basic button">Delete </button>
 		</div>
-		
+			<a class="ui green basic button" href="/blogs/<%=blog._id%>/comments/new"> Add New Comment </a>
 		<% blog.comments.forEach(function(comment){ %>
 			<p> <%= comment.author %> - <%= comment.text %> </p>
 		<% })  %>
