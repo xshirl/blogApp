@@ -10,9 +10,12 @@ var seedDb = require('./seeds');
 
 seedDb();
 
-mongoose.connect("mongodb://localhost/blog_app", {
+var uri = process.env.MONGODB_URI || process.env.MONGOHQ_URL || process.env.MONGOLAB_URI;
+
+mongoose.connect(uri || "mongodb://localhost/blog_app", {
 	useNewUrlParser: true
-});
+ });
+
 
 app.set("view engine", "ejs");
 
