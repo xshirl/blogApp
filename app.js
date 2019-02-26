@@ -142,7 +142,7 @@ app.post("/blogs/:id/comments", function(req, res) {
 	})
 })
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
 	console.log("Server is running")
